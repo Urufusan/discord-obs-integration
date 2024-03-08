@@ -1,0 +1,64 @@
+document.addEventListener("DOMContentLoaded", function () {
+  const container = document.getElementById("container");
+  const stickers = [{ src: "image1.jpg" }, { src: "image2.jpg" }];
+
+  stickers.forEach((sticker) => {
+    createSticker(sticker);
+  });
+
+  function createSticker(stickerInfo) {
+    const sticker = document.createElement("img");
+    sticker.src = stickerInfo.src;
+    sticker.classList.add("sticker");
+    sticker.width = stickerInfo.width;
+    sticker.height = stickerInfo.height;
+
+    sticker.style.left =
+      Math.random() * (container.offsetWidth - stickerInfo.width) + "px";
+    sticker.style.top =
+      Math.random() * (container.offsetHeight - stickerInfo.height) + "px";
+
+    container.appendChild(sticker);
+
+    moveSticker(sticker);
+  }
+
+  function moveSticker(sticker) {
+    sticker.style.left =
+      Math.random() * (container.offsetWidth - sticker.offsetWidth) + "px";
+    sticker.style.top =
+      Math.random() * (container.offsetHeight - sticker.offsetHeight) + "px";
+
+    const minX = 0;
+    const minY = 0;
+    const maxX = container.offsetWidth - sticker.offsetWidth;
+    const maxY = container.offsetHeight - sticker.offsetHeight;
+
+    let speedX = Math.random() * 6 - 1;
+    let speedY = Math.random() * 6 - 1;
+
+    function update() {
+      let x = parseFloat(sticker.style.left) || 0;
+      let y = parseFloat(sticker.style.top) || 0;
+
+      x += speedX;
+      y += speedY;
+
+      if (x < minX || x > maxX) {
+        speedX = -speedX;
+        x = Math.max(minX, Math.min(x, maxX));
+      }
+      if (y < minY || y > maxY) {
+        speedY = -speedY;
+        y = Math.max(minY, Math.min(y, maxY));
+      }
+
+      sticker.style.left = x + "px";
+      sticker.style.top = y + "px";
+
+      requestAnimationFrame(update);
+    }
+
+    requestAnimationFrame(update);
+  }
+});
