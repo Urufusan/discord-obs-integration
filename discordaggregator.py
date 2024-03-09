@@ -5,7 +5,7 @@ import sys
 import os
 import requests 
 import json
-from discord_OBS_overlay_config import discord_token
+from discord_OBS_overlay_config import discord_token, valid_channels_list
 
 EMOJI_PATTERN = re.compile('<:[^:]+?:(\\d+)>')
 
@@ -78,7 +78,7 @@ async def on_ready():
 
 @client.event
 async def on_message(ctx: discord.Message):
-    if ctx.channel.id != 1051053710022815756:
+    if ctx.channel.id not in valid_channels_list:
         return
 
     if ctx.author == client.user:
