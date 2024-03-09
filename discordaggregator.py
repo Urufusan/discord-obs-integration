@@ -42,7 +42,7 @@ def get_gif_url_tenor(tenor_com_url: str):
                                 }).text
 
     # Regex to find the URL on the c.tenor.com domain that ends with .gif
-    regex = r"(?i)\b((https?://media[.]tenor[.]com/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))[.]gif)"
+    regex = r"(?i)\b((https?://media1[.]tenor[.]com/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))[.]gif)"
 
     # Find and return the first match
     return re.findall(regex, page_content)[0][0]
