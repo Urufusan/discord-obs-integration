@@ -30,6 +30,24 @@ weblink_rgx += r')'
 
 weblink_rgx_searcher = re.compile(weblink_rgx, re.IGNORECASE)
 
+
+def get_gif_url_tenor(tenor_com_url: str):
+
+    # Get the page content
+    page_content = requests.get(url=tenor_com_url,
+                                headers={
+                                    "User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:123.0) Gecko/20100101 Firefox/123.0",
+                                    "DNT": "1",
+                                    "Sec-GPC": "1",
+                                }).text
+
+    # Regex to find the URL on the c.tenor.com domain that ends with .gif
+    regex = r"(?i)\b((https?://c[.]tenor[.]com/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))[.]gif)"
+
+    # Find and return the first match
+    return re.findall(regex, page_content)[0][0]
+
+
 def get_web_url_from_str(raw_string: str) -> str:
     global weblink_rgx_searcher
     try:
@@ -109,6 +127,8 @@ async def on_message(ctx: discord.Message):
     list_of_imgs = list(list_of_imgs)
     _final_json_list = []
     for _image_url_i in list_of_imgs:
+        if "https://tenor.com" in _image_url_i:
+            _image_url_i = get_gif_url_tenor(_image_url_i)
         _final_json_list.append({'src': _image_url_i})
     if list_of_imgs:
         print(_final_json_list)
