@@ -106,13 +106,16 @@ async def on_message(ctx: discord.Message):
 
     list_of_imgs = set()
     print(ctx.content)
+    print(len(ctx.embeds))
+    # print(ctx.embeds[0].url)
     # ctx.
     for attachment in ctx.attachments:
         if attachment.content_type.startswith("image"):
             list_of_imgs.add(attachment.url)
     
     for embed_obj in ctx.embeds:
-        list_of_imgs.add(embed_obj.image.url)
+        print(embed_obj.to_dict())
+        list_of_imgs.add(embed_obj.thumbnail.url)
     
     if bool(re.match(EMOJI_PATTERN, ctx.content)):
         buf = (int(EMOJI_PATTERN.findall(ctx.content)[0]))
@@ -126,10 +129,16 @@ async def on_message(ctx: discord.Message):
     list_of_imgs.discard(None)
     list_of_imgs = list(list_of_imgs)
     _final_json_list = []
+    
+    # Ruleset block
     for _image_url_i in list_of_imgs:
         if "https://tenor.com" in _image_url_i:
             _image_url_i = get_gif_url_tenor(_image_url_i)
+        if "media.discordapp.net" in _image_url_i:
+            if "&hm=" not in _image_url_i:
+                continue
         _final_json_list.append({'src': _image_url_i})
+    
     if list_of_imgs:
         print(_final_json_list)
         requests.post("http://127.0.0.1:5000/newimage", json=_final_json_list)
