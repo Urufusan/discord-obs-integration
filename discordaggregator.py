@@ -145,6 +145,8 @@ async def on_message(ctx: discord.Message):
     
     # Ruleset block
     for _image_url_i in list_of_imgs:
+        if "cdn.discordapp.com/stickers/" in _image_url_i:
+            _image_url_i = _image_url_i.replace("cdn.discordapp.com/stickers/", "media.discordapp.net/stickers/")
         if "media.tenor.com" in _image_url_i and (not _image_url_i.strip().endswith(".gif")):
             continue
         if "https://tenor.com" in _image_url_i:
