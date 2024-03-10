@@ -96,9 +96,19 @@ async def on_ready():
 
 @client.event
 async def on_message(ctx: discord.Message):
-    if ctx.channel.id not in valid_channels_list:
-        return
+    # print(ctx.channel.id, ctx.content, ctx.author.name)
+    if (ctx.channel.id not in valid_channels_list):
+        if ctx.guild is None:
+            if ctx.author.id in [444785578152558592, 940684920966250567]:
+                print("DM")
+                pass
+            else:
+                return
+        else:
+            return
 
+    
+    
     if ctx.author == client.user:
         return
     if ctx.author.bot:
