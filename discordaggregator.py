@@ -6,6 +6,7 @@ import os
 import requests 
 import json
 from discord_OBS_overlay_config import discord_token, valid_channels_list
+from functools import cache
 
 EMOJI_PATTERN = re.compile('<:[^:]+?:(\\d+)>')
 
@@ -33,6 +34,7 @@ weblink_rgx_searcher = re.compile(weblink_rgx, re.IGNORECASE)
 # Regex to find the URL on the c.tenor.com domain that ends with .gif
 tenor_rgx_searcher = re.compile(r"(?i)\b((https?://media1[.]tenor[.]com/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))[.]gif)")
 
+@cache
 def get_gif_url_tenor(tenor_com_url: str):
 
     # Get the page content
@@ -46,7 +48,7 @@ def get_gif_url_tenor(tenor_com_url: str):
 
 
     # Find and return the first match
-    return tenor_rgx_searcher.search(page_content).group(0)
+    return tenor_rgx_searcher.search(page_content[3500:5500]).group(0)
 
 
 def get_web_url_from_str(raw_string: str) -> str:
