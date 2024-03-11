@@ -30,6 +30,8 @@ weblink_rgx += r')'
 
 weblink_rgx_searcher = re.compile(weblink_rgx, re.IGNORECASE)
 
+# Regex to find the URL on the c.tenor.com domain that ends with .gif
+tenor_rgx_searcher = re.compile(r"(?i)\b((https?://media1[.]tenor[.]com/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))[.]gif)")
 
 def get_gif_url_tenor(tenor_com_url: str):
 
@@ -41,11 +43,10 @@ def get_gif_url_tenor(tenor_com_url: str):
                                     "Sec-GPC": "1",
                                 }).text
 
-    # Regex to find the URL on the c.tenor.com domain that ends with .gif
-    regex = r"(?i)\b((https?://media1[.]tenor[.]com/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))[.]gif)"
+
 
     # Find and return the first match
-    return re.findall(regex, page_content)[0][0]
+    return tenor_rgx_searcher.search(page_content).group(0)
 
 
 def get_web_url_from_str(raw_string: str) -> str:
