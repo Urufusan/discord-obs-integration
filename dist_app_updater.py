@@ -13,28 +13,16 @@ def move_files_from_directory():
         return
     
     # Get a list of files in the source directory
-    files = os.listdir(source_dir)
-    
-    # Move each file from the source directory to the current directory
-    for file_name in files:
-        source_path = os.path.join(source_dir, file_name)
-        destination_path = os.path.join(os.getcwd(), file_name)
-        
-        # Check if the file is not a directory before moving
-        if os.path.isfile(source_path):
-            try:
-                shutil.move(source_path, destination_path)
-                print(f"Moved '{file_name}' to the current directory.")
-            except Exception as e:
-                print(f"Failed to move '{file_name}': {str(e)}")
+    os.system(f"cp -aR {source_dir}/* .")
+    os.system("pip install flask flask-sock requests")
     # Remove the source directory
     try:
-        os.rmdir(source_dir)
+        shutil.rmtree(source_dir)
         print(f"Deleted the directory '{source_dir}'.")
     except Exception as e:
         print(f"Failed to delete the directory '{source_dir}': {str(e)}")
 # Call the function to move files
-move_files_from_directory()
+# move_files_from_directory()
 
 
 def download_and_extract_zip(url):
