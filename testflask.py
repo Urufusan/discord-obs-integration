@@ -43,7 +43,7 @@ def get_images():
 
 def image_url_sender():
     while True:
-        time.sleep(0.3)
+        time.sleep(0.1)
         # print("Tick")
         while not image_queue:
             time.sleep(0.3)
@@ -68,7 +68,7 @@ def wsock_frontend_com(ws: Server):
     ws_client_list.append(ws)
     while True:
         data = ws.receive(0)
-        time.sleep(0.9)
+        time.sleep(0.5)
         if data:
             # if data is None: data = ""
             print()
