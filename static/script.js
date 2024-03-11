@@ -16,7 +16,27 @@ document.addEventListener("DOMContentLoaded", function () {
         console.error('Error fetching images:', error);
       });
   }
+  // ^ replace the above with WS:
+  //     // Create a WebSocket connection
+  //     const socket = new WebSocket("ws://127.0.0.1:5000/ws");
 
+  //     // Handle WebSocket connection open event
+  //     socket.addEventListener("open", function (event) {
+  //         console.log("WebSocket connection established");
+  //     });
+  
+  //     // Handle WebSocket message event
+  //     socket.addEventListener("message", function (event) {
+  //         const data = JSON.parse(event.data);
+  //         if (data.type === "image") {
+  //             createSticker(data.src);
+  //         }
+  //     });
+  
+  //     // Handle WebSocket connection close event
+  //     socket.addEventListener("close", function (event) {
+  //         console.log("WebSocket connection closed");
+  //     });
   // Function to create a sticker
   function createSticker(src) {
     let FadeTime = searchParams.has("FadeTime") ? parseFloat(searchParams.get("FadeTime")) : 5.5
