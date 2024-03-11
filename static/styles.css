@@ -30,8 +30,8 @@ html {
 .sticker {
   position: absolute;
   pointer-events: none;
-  max-width: 350px;
-  min-width: 100px;
+  max-width: 400px;
+  min-width: 160px;
   height: auto;
   image-rendering: pixelated;
   /* animation: fadeInOut 5.5s ease-in-out; */
