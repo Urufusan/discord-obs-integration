@@ -10,4 +10,4 @@ while True:
                     {'src': 'https://cdn.discordapp.com/emojis/1122349994486280332.gif?size=96&quality=lossless'},
                     {'src': 'https://media.discordapp.net/attachments/1190959483187372053/1215906645381484544/ezgif.com-animated-gif-maker5.gif?ex=65fe744e&is=65ebff4e&hm=9e1538d1b19920f14d7035e503e59fbb19b039424c865faa8c5f213b2d6c2a10&'}
                     ])])
-    time.sleep(random.uniform(0.1, 2.0))
+    time.sleep(random.uniform(0.1, 1.0))

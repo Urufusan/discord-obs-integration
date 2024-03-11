@@ -4,39 +4,41 @@ document.addEventListener("DOMContentLoaded", function () {
   // const FadeTime = 
   // console.log(FadeTime)
   // Function to fetch images from the server
-  function fetchImages() {
-    fetch("http://127.0.0.1:5000/getimages")
-      .then(response => response.json())
-      .then(data => {
-        data.images.forEach(image => {
-          createSticker(image.src);
-        });
-      })
-      .catch(error => {
-        console.error('Error fetching images:', error);
-      });
-  }
-  // ^ replace the above with WS:
-  //     // Create a WebSocket connection
-  //     const socket = new WebSocket("ws://127.0.0.1:5000/ws");
 
-  //     // Handle WebSocket connection open event
-  //     socket.addEventListener("open", function (event) {
-  //         console.log("WebSocket connection established");
+  // function fetchImages() {
+  //   fetch("http://127.0.0.1:5000/getimages")
+  //     .then(response => response.json())
+  //     .then(data => {
+  //       data.images.forEach(image => {
+  //         createSticker(image.src);
+  //       });
+  //     })
+  //     .catch(error => {
+  //       console.error('Error fetching images:', error);
   //     });
-  
-  //     // Handle WebSocket message event
-  //     socket.addEventListener("message", function (event) {
-  //         const data = JSON.parse(event.data);
-  //         if (data.type === "image") {
-  //             createSticker(data.src);
-  //         }
-  //     });
-  
-  //     // Handle WebSocket connection close event
-  //     socket.addEventListener("close", function (event) {
-  //         console.log("WebSocket connection closed");
-  //     });
+  // }
+
+  // ^ replace the above with WS:
+  // Create a WebSocket connection
+  const socket = new WebSocket("ws://127.0.0.1:5000/frontendws"); //cSpell: disable-line
+
+  // Handle WebSocket connection open event
+  socket.onopen = function() {
+    console.log("WebSocket connection established");
+  };
+
+  // Handle WebSocket message event
+  socket.onmessage = function(event) {
+    const data = JSON.parse(event.data);
+    data.images.forEach(image => {
+      createSticker(image.src);
+    })
+  };
+
+  // Handle WebSocket connection close event
+  socket.onclose = function() {
+    console.log("WebSocket connection closed");
+  };
   // Function to create a sticker
   function createSticker(src) {
     let FadeTime = searchParams.has("FadeTime") ? parseFloat(searchParams.get("FadeTime")) : 5.5
@@ -44,8 +46,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const sticker = document.createElement("img");
     sticker.src = src;
     sticker.classList.add("sticker");
-    sticker.style.setProperty("animation", "fadeInOut "+FadeTime+"s ease-in-out")
-    console.log(sticker.style.getPropertyValue("animation"))
+    sticker.style.setProperty("animation", "fadeInOut " + FadeTime + "s ease-in-out")
+    //console.log(sticker.style.getPropertyValue("animation"))
     // Set initial position
     sticker.style.left = Math.random() * (container.offsetWidth - 350) + "px";
     sticker.style.top = Math.random() * (container.offsetHeight - 350) + "px";
@@ -65,16 +67,16 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   // Fetch images every 5 seconds
-  setInterval(fetchImages, 2000);
+  // setInterval(fetchImages, 2000);
 
   // Function to move stickers
-  function moveStickers() {
-    const stickers = container.querySelectorAll('.sticker');
-    stickers.forEach(sticker => {
-      sticker.style.left = Math.random() * (container.offsetWidth - sticker.offsetWidth) + "px";
-      sticker.style.top = Math.random() * (container.offsetHeight - sticker.offsetHeight) + "px";
-    });
-  }
+  // function moveStickers() {
+  //   const stickers = container.querySelectorAll('.sticker');
+  //   stickers.forEach(sticker => {
+  //     sticker.style.left = Math.random() * (container.offsetWidth - sticker.offsetWidth) + "px";
+  //     sticker.style.top = Math.random() * (container.offsetHeight - sticker.offsetHeight) + "px";
+  //   });
+  // }
 
   // Move stickers initially and then periodically
   // moveStickers();
