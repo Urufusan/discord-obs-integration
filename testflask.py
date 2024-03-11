@@ -1,5 +1,5 @@
 from flask import Flask, request, jsonify, redirect
-
+# https://github.com/miguelgrinberg/flask-sock
 app = Flask(__name__)
 
 # Initialize an empty list to store image links
