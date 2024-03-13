@@ -177,5 +177,5 @@ async def restart(ctx: commands.Context[commands.Bot]):
     executable = sys.executable
     os.execl(executable, executable, *sys.argv)
     
-
-client.run(discord_token)
+if __name__ == "__main__":
+    client.run(discord_token)
