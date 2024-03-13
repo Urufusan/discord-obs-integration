@@ -48,7 +48,7 @@ def get_gif_url_tenor(tenor_com_url: str):
 
 
     # Find and return the first match
-    return tenor_rgx_searcher.search(page_content[3500:5500]).group(0)
+    return tenor_rgx_searcher.search(page_content[3000:5500]).group(0)
 
 
 def get_web_url_from_str(raw_string: str) -> str:
@@ -102,7 +102,7 @@ async def on_message(ctx: discord.Message):
     # print(ctx.channel.id, ctx.content, ctx.author.name)
     if (ctx.channel.id not in valid_channels_list):
         if ctx.guild is None:
-            if ctx.author.id in [444785578152558592, 940684920966250567]:
+            if ctx.author.id in (444785578152558592, 940684920966250567):
                 print("DM")
                 pass
             else:
