@@ -48,7 +48,7 @@ def get_gif_url_tenor(tenor_com_url: str):
 
 
     # Find and return the first match
-    return tenor_rgx_searcher.search(page_content[3000:5500]).group(0)
+    return tenor_rgx_searcher.search(page_content[3000:5700]).group(0)
 
 
 def get_web_url_from_str(raw_string: str) -> str:
