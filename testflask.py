@@ -49,16 +49,21 @@ def image_url_sender():
             time.sleep(0.3)
             pass
         clients = ws_client_list.copy()
-        for client in clients:
-            try:
-                images_to_return = image_queue[:]
-                image_queue.clear()
-                _payload = json.dumps({'images': images_to_return})
-                print("[WS PAYLOAD]", _payload)
-                client.send(_payload)
-            except Exception as e:
-                print("[WS EXCEPT]", e)
-                ws_client_list.remove(client)
+        if clients:
+            
+            images_to_return = image_queue[:]
+            image_queue.clear()
+            
+            for client in clients:
+                try:
+                    # images_to_return = image_queue[:]
+                    # image_queue.clear()
+                    _payload = json.dumps({'images': images_to_return})
+                    print("[WS PAYLOAD]", _payload)
+                    client.send(_payload)
+                except Exception as e:
+                    print("[WS EXCEPT]", e)
+                    ws_client_list.remove(client)
 
 
 @wsock.route('/frontendws')
