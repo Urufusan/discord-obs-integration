@@ -14,7 +14,7 @@ def move_files_from_directory():
     
     # Get a list of files in the source directory
     os.system(f"cp -aR {source_dir}/* .")
-    os.system("pip install flask flask-sock requests")
+    os.system("pip3 install flask flask-sock requests")
     # Remove the source directory
     try:
         shutil.rmtree(source_dir)
