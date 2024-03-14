@@ -24,6 +24,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Handle WebSocket connection open event
   socket.onopen = function() {
+    document.getElementById("overlay").style.display = "none";
     console.log("WebSocket connection established");
   };
 
@@ -37,6 +38,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // Handle WebSocket connection close event
   socket.onclose = function() {
+    document.getElementById("overlay").style.display = "block";
     console.log("WebSocket connection closed");
   };
   // Function to create a sticker

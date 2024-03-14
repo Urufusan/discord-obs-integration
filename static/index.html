@@ -1,14 +1,24 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Discord-OBS overlay</title>
-    <link rel="icon" type="image/png" sizes="32x32" href="/static/oilthing-min.png" />
-    <link rel="stylesheet" href="styles.css" />
-  </head>
-  <body>
-    <div class="container" id="container"></div>
-    <script src="script.js"></script>
-  </body>
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Discord-OBS overlay</title>
+  <link rel="icon" type="image/png" sizes="32x32" href="/static/oilthing-min.png" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+
+<body>
+  <div id="overlay">
+    <div style="  display: inline-grid; grid-template-columns: auto auto auto; padding: 10px;">
+      <img style='vertical-align:middle; padding: 10px;' src='/static/offline.svg'>
+      <h1 class="text-red-col-cycle" style='transform: translateY(25%); display:inline; text-align: center;'>Discord overlay not connected <br>
+        (refresh the source)!</h1>
+    </div>
+  </div>
+  <div class="container" id="container"></div>
+  <script src="script.js"></script>
+</body>
+
 </html>
