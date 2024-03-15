@@ -32,7 +32,8 @@ weblink_rgx += r')'
 weblink_rgx_searcher = re.compile(weblink_rgx, re.IGNORECASE)
 
 # Regex to find the URL on the c.tenor.com domain that ends with .gif
-tenor_rgx_searcher = re.compile(r"(?i)\b((https?://media1[.]tenor[.]com/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))[.]gif)")
+# tenor_rgx_searcher = re.compile(r"(?i)\b((https?://media1[.]tenor[.]com/)(?:[^\s()<>]+|\(([^\s()<>]+|(\([^\s()<>]+\)))*\))[.]gif)")
+tenor_rgx_searcher = re.compile(r"https:\/\/media1\.tenor\.com\/m\/[\w\d]+\/[\w\-]+\.gif")
 
 @cache
 def get_gif_url_tenor(tenor_com_url: str):
