@@ -70,7 +70,7 @@ if __name__ == "__main__":
     # URL of the zip file to download
     zip_url = "https://github.com/Urufusan/discord-obs-integration/archive/refs/heads/main.zip"
     print("Origin package hash:", _o_p_h := get_online_package_hash())
-    print("Local package hash:", _l_p_h := get_local_package_hash())
+    print("Local package hash: ", _l_p_h := get_local_package_hash())
     # exit()
     if _l_p_h != _o_p_h:
         # Call the function to download and extract the zip file
