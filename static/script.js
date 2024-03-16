@@ -23,21 +23,34 @@ document.addEventListener("DOMContentLoaded", function () {
   const socket = new WebSocket("ws://127.0.0.1:5000/frontendws"); //cSpell: disable-line
 
   // Handle WebSocket connection open event
-  socket.onopen = function() {
+  socket.onopen = function () {
     document.getElementById("overlay").style.display = "none";
     console.log("WebSocket connection established");
   };
 
   // Handle WebSocket message event
-  socket.onmessage = function(event) {
+  socket.onmessage = function (event) {
     const data = JSON.parse(event.data);
-    data.images.forEach(image => {
-      createSticker(image.src);
-    })
+    if (data.hasOwnProperty("spec_message")) {
+      if (!data.spec_message.includes("HIDE-ERROR-STRING")) {
+        document.getElementById("errtext").innerHTML = data.spec_message
+        document.getElementById("overlay").style.display = "block";
+      }
+
+      else {
+        document.getElementById("overlay").style.display = "none";
+      }
+    }
+    if (data.hasOwnProperty("images")) {
+      data.images.forEach(image => {
+        createSticker(image.src);
+      })
+    }
   };
 
   // Handle WebSocket connection close event
-  socket.onclose = function() {
+  socket.onclose = function () {
+    document.getElementById("errtext").innerHTML = "Discord overlay not connected<br>(refresh the source)!"
     document.getElementById("overlay").style.display = "block";
     console.log("WebSocket connection closed");
   };

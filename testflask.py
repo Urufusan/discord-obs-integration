@@ -31,6 +31,22 @@ def new_image():
     else:
         return jsonify({'error': 'No image link provided'}), 400
 
+@app.route('/specialmessage', methods=['POST'])
+def specialmesssage():
+    _specialmsg = request.json
+    clients = ws_client_list.copy()
+    if clients:
+        for client in clients:
+            try:
+                print("[WS SPEC MSG]", _specialmsg)
+                client.send(json.dumps(_specialmsg))
+                return "OK", 200
+            except Exception as e:
+                print("[WS EXCEPT]", e)
+                ws_client_list.remove(client)
+                return "WS FAIL", 500
+    return "NO CLIENTS", 503
+
 # Endpoint to get all the images in the queue
 @app.route('/getimages', methods=['GET'])
 def get_images():

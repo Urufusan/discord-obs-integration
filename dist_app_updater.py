@@ -66,6 +66,12 @@ def download_and_extract_zip(url):
     else:
         sys.exit("Failed to download the zip file.")
 
+def is_outdated():
+    print("Origin package hash:", _o_p_h := get_online_package_hash())
+    print("Local package hash: ", _l_p_h := get_local_package_hash())
+    
+    return _o_p_h != _l_p_h
+
 if __name__ == "__main__":
     # URL of the zip file to download
     zip_url = "https://github.com/Urufusan/discord-obs-integration/archive/refs/heads/main.zip"
