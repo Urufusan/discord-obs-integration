@@ -1,8 +1,29 @@
 import requests
 import zipfile
 import os
+import sys
 from io import BytesIO
 import shutil
+
+# from requests_toolbelt.utils import dump
+
+def get_online_package_hash():
+    _codeload_request = requests.head("https://codeload.github.com/Urufusan/discord-obs-integration/zip/refs/heads/main", headers={"User-Agent": "curl/7.81.0"})
+    _etag = _codeload_request.headers.get("etag", "").strip().lstrip("W/").strip("\"")
+    # print(dump.dump_all(_codeload_request).decode("utf-8"))
+    return _etag
+
+def get_local_package_hash():
+    try:
+        with open(".PACKAGEVER", "r") as _pverfile:
+            _local_etag = _pverfile.read().strip()
+        return _local_etag
+    except:
+        return "UNKNOWN"
+
+def write_package_hash(etag_string):
+    with open(".PACKAGEVER", "w") as _pverfile:
+        _pverfile.write(etag_string)
 
 def move_files_from_directory():
     source_dir = "discord-obs-integration-main"
@@ -43,11 +64,16 @@ def download_and_extract_zip(url):
         move_files_from_directory()
         print("Update completed successfully!")
     else:
-        print("Failed to download the zip file.")
+        sys.exit("Failed to download the zip file.")
 
 if __name__ == "__main__":
     # URL of the zip file to download
     zip_url = "https://github.com/Urufusan/discord-obs-integration/archive/refs/heads/main.zip"
-    
-    # Call the function to download and extract the zip file
-    download_and_extract_zip(zip_url)
+    print("Origin package hash:", _o_p_h := get_online_package_hash())
+    print("Local package hash:", _l_p_h := get_local_package_hash())
+    # exit()
+    if _l_p_h != _o_p_h:
+        # Call the function to download and extract the zip file
+        download_and_extract_zip(zip_url)
+        write_package_hash(_o_p_h)
+
