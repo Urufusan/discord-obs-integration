@@ -53,26 +53,15 @@ def get_gif_url_tenor(tenor_com_url: str):
 
 
 def get_web_url_from_str(raw_string: str) -> str:
-    global weblink_rgx_searcher
     try:
-        print(weblink_rgx_searcher.search(raw_string).group(0).strip())
-        itworks = True
-    except:
-        print("eh whatever")
-        itworks = False
-        pass
-
-    if itworks:
-        urlBF = weblink_rgx_searcher.search(raw_string)
-        try:
-            #url = 
-            if urlBF.group(0).strip().endswith(">"): url = urlBF.group(0).strip()[:-1]
-            else: url = urlBF.group(0).strip()
-            buf = urlBF.group(3).strip()
-            print(buf, url)
-            return url.strip(")").strip("(")
-        except:
-            print('fail')
+        _r_match = weblink_rgx_searcher.search(raw_string)
+        if _r_match:
+            url = _r_match.group(0).strip()
+            return url.rstrip(">").strip(")").strip("(")
+        else:
+            print("No valid web link found.")
+    except Exception as e:
+        print(f"Error: {e}")
     return ''
 
 
