@@ -5,8 +5,13 @@ from flask_sock import Sock as FlaskWSocket
 from simple_websocket.ws import Server
 import json
 import pprint
-from io import StringIO
-
+# from io import StringIO
+CON_HEADER_TEXT = """   ____        ____  __   _____
+   / __ \      / __ \/ /_ / ___/
+  / / / /_____/ / / / __ \\\__ \ 
+ / /_/ /_____/ /_/ / /_/ /__/ / 
+/_____/      \____/_.___/____/  
+"""
 
 class TerminalColors:
     HEADER = '\033[95m'
@@ -154,4 +159,5 @@ if __name__ == '__main__':
     t = threading.Thread(target=image_url_sender)
     t.daemon = True
     t.start()
+    print(tc.terminalpaint("#964bb4"), CON_HEADER_TEXT, tc.ENDC)
     app.run(debug=False)
