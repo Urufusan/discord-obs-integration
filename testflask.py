@@ -4,6 +4,51 @@ from flask import Flask, request, jsonify, redirect
 from flask_sock import Sock as FlaskWSocket
 from simple_websocket.ws import Server
 import json
+import pprint
+from io import StringIO
+
+
+class TerminalColors:
+    HEADER = '\033[95m'
+    BLUE = '\033[94m'
+    GREEN = '\033[92m'
+    WARNING = '\033[93m'
+    FAIL = '\033[91m'
+    ENDC = '\033[0m'
+    ORANGE = '\033[33m'
+
+    @staticmethod
+    def terminalpaint(color):
+        if isinstance(color, str):
+            if color.startswith("#"):
+                color = color[1:]
+            r, g, b = tuple(int(color[i:i+2], 16) for i in (0, 2, 4))
+        elif isinstance(color, tuple) and len(color) == 3:
+            r, g, b = color
+        else:
+            raise ValueError("Invalid color format")
+        
+        color_code = f"\x1b[38;2;{r};{g};{b}m"
+        return color_code
+
+    def print_ctext(self, _text, color="#964bb4"):
+        color_code = self.terminalpaint(color)
+        # _str_io_buf = StringIO()
+        # pprint.pprint(object=_text, stream=_str_io_buf)
+        # _raw_pp_str = _str_io_buf.getvalue()
+        # del _str_io_buf
+        _raw_pp_str = pprint.pformat(object=_text)
+        _raw_pp_str = _raw_pp_str.strip()
+        if _raw_pp_str:
+            if _raw_pp_str.endswith("'"):
+                _raw_pp_str = _raw_pp_str.strip("'")
+            elif _raw_pp_str.endswith("\""):
+                _raw_pp_str = _raw_pp_str.strip("\"")
+
+            print(f"{self.terminalpaint(color)}{_raw_pp_str}{self.ENDC}")
+
+tc = TerminalColors()
+printfc = tc.print_ctext
 
 # https://github.com/miguelgrinberg/flask-sock
 app = Flask(__name__)
@@ -38,11 +83,11 @@ def specialmesssage():
     if clients:
         for client in clients:
             try:
-                print("[WS SPEC MSG]", _specialmsg)
+                tc.print_ctext(f"[WS SPEC MSG] {_specialmsg}", color="#ffdc3e")
                 client.send(json.dumps(_specialmsg))
                 return "OK", 200
             except Exception as e:
-                print("[WS EXCEPT]", e)
+                tc.print_ctext(f"[WS EXCEPT] {e}", color="#ff4444")
                 ws_client_list.remove(client)
                 return "WS FAIL", 500
     return "NO CLIENTS", 503
@@ -75,17 +120,17 @@ def image_url_sender():
                     # images_to_return = image_queue[:]
                     # image_queue.clear()
                     _payload = json.dumps({'images': images_to_return})
-                    print("[WS PAYLOAD]", _payload)
+                    print(f"{tc.terminalpaint('#339bbb')}[WS PAYLOAD]{tc.ENDC}", _payload)
                     client.send(_payload)
                 except Exception as e:
-                    print("[WS EXCEPT]", e)
+                    tc.print_ctext(f"[WS EXCEPT] {e}", color="#ff4444")
                     ws_client_list.remove(client)
 
 
 @wsock.route('/frontendws')
 def wsock_frontend_com(ws: Server):
-    print("[WS] New websocket connection!")
-    print(ws.mode)
+    tc.print_ctext(f"[WS] New websocket connection! - {ws.mode}", color="#3dfa4d")
+    # print(ws.mode)
     ws_client_list.append(ws)
     while True:
         data = ws.receive(0)
@@ -99,7 +144,7 @@ def wsock_frontend_com(ws: Server):
                 ws.close(message="1000 client request - stop")
                 ws_client_list.remove(ws)
                 break
-    print("[WS] Disconnected!")
+    tc.print_ctext("[WS] Disconnected!", color="#ff4444")
     
 @app.route('/')
 def goto_correct():
