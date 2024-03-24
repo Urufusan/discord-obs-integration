@@ -80,7 +80,7 @@ if __name__ == "__main__":
     # exit()
     if _l_p_h != _o_p_h:
         # Call the function to download and extract the zip file
-        download_and_extract_zip(zip_url)
+        if not os.environ.get("DOBSCACHE"): download_and_extract_zip(zip_url)
         write_package_hash(_o_p_h)
     else:
         print("Local project files are up-to-date, there is nothing to update!")

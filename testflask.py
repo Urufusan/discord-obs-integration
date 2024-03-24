@@ -153,7 +153,7 @@ def wsock_frontend_com(ws: Server):
                 break
             elif data.strip().startswith("@WSCONNECT"):
                 if is_outdated():
-                    ws.send(json.dumps({"spec_message": f"Discord overlay is not up-to-date!<br>please update!"}))
+                    ws.send(json.dumps({"spec_message": f"Discord overlay is not up-to-date!<br>Please run the update script!"}))
                     
     tc.print_ctext("[WS] Disconnected!", color="#ff4444")
     
