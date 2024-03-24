@@ -5,6 +5,8 @@ from flask_sock import Sock as FlaskWSocket
 from simple_websocket.ws import Server
 import json
 import pprint
+from dist_app_updater import is_outdated
+
 # from io import StringIO
 CON_HEADER_TEXT = """   ____        ____  __   _____
    / __ \      / __ \/ /_ / ___/
@@ -149,6 +151,10 @@ def wsock_frontend_com(ws: Server):
                 ws.close(message="1000 client request - stop")
                 ws_client_list.remove(ws)
                 break
+            elif data.strip().startswith("@WSCONNECT"):
+                if is_outdated():
+                    ws.send(json.dumps({"spec_message": f"Discord overlay is not up-to-date!<br>please update!"}))
+                    
     tc.print_ctext("[WS] Disconnected!", color="#ff4444")
     
 @app.route('/')

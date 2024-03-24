@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", function () {
   // Handle WebSocket connection open event
   socket.onopen = function () {
     document.getElementById("overlay").style.display = "none";
+    socket.send("@WSCONNECT "+window.navigator.userAgent)
     console.log("WebSocket connection established");
   };
 
