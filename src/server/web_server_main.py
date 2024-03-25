@@ -1,10 +1,15 @@
-import threading
-import time
-from flask import Flask, request, jsonify, redirect
-from flask_sock import Sock as FlaskWSocket
-from simple_websocket.ws import Server
 import json
 import pprint
+import sys
+import threading
+import time
+
+from flask import Flask, jsonify, redirect, request
+from flask_sock import Sock as FlaskWSocket
+from simple_websocket.ws import Server
+
+sys.path.append('../../../discord-obs-integration/')
+
 from dist_app_updater import is_outdated
 
 # from io import StringIO
@@ -145,7 +150,7 @@ def wsock_frontend_com(ws: Server):
         if data:
             # if data is None: data = ""
             print()
-            print(f"[WS DATA {type(data)}]", data)
+            print(f"{tc.terminalpaint('#3357bb')}[WS DATA {type(data)}]{tc.ENDC}", data)
             print()
             if data.strip() == 'stop':
                 ws.close(message="1000 client request - stop")

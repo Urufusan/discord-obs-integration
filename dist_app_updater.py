@@ -5,6 +5,7 @@ import sys
 from io import BytesIO
 import shutil
 
+PROJECT_PARENT_FOLDER = os.path.dirname(os.path.abspath(__file__))
 # from requests_toolbelt.utils import dump
 
 def get_online_package_hash():
@@ -15,10 +16,11 @@ def get_online_package_hash():
 
 def get_local_package_hash():
     try:
-        with open(".PACKAGEVER", "r") as _pverfile:
+        with open(f"{PROJECT_PARENT_FOLDER if __name__ != '__main__' else '.'}/.PACKAGEVER", "r") as _pverfile:
             _local_etag = _pverfile.read().strip()
         return _local_etag
-    except:
+    except Exception as e:
+        print(e)
         return "UNKNOWN"
 
 def write_package_hash(etag_string):

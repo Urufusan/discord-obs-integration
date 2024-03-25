@@ -1,12 +1,17 @@
 import re
+import sys
+
 import discord
 from discord.ext import commands
-import sys
-import os
-import requests 
+
+sys.path.append('../../../discord-obs-integration/')
 import json
-from discord_OBS_overlay_config import discord_token, valid_channels_list
+import os
 from functools import cache
+
+import requests
+
+from discord_OBS_overlay_config import discord_token, valid_channels_list
 
 EMOJI_PATTERN = re.compile('<:[^:]+?:(\\d+)>')
 
