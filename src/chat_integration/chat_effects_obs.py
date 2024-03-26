@@ -88,6 +88,9 @@ if __name__ == "__main__":
                     print({("hue_shift" if _chat_command_str == "hue" else _chat_command_str): _split_message_contents[2]})
                     cl.set_source_filter_settings("facecam", "Color Correction", {
                     ("hue_shift" if _chat_command_str == "hue" else _chat_command_str): float(_split_message_contents[2])}, overlay=True)
+                
+                case "exit":
+                    break
 
                 case _:
                     print("fail!")
