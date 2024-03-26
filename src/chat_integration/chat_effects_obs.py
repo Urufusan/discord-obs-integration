@@ -42,6 +42,9 @@ if __name__ == "__main__":
     print("Connected to OBS instance running version", cl.get_version().obs_version)
     stuff = cl.get_source_active("facecam")
     print((stuff.attrs()))
+    #TODO: Add command parsing for skewing (3d) and camera settings (gamma, hue, etc)
+    # e.g. !cam gamma 1.0
+    # e.g. !cam 90 90 90 (skewing in 3D)
     stuff2 = cl.get_source_filter(source_name="facecam", filter_name="3D Effect")
     print(stuff2.attrs())
     print(stuff2.filter_settings)
