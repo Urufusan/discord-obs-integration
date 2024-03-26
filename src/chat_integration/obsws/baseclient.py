@@ -49,7 +49,7 @@ class ObsClient:
 
     def _conn_from_toml(self) -> dict:
         try:
-            import tomllib
+            import tomllib # type: ignore
         except ModuleNotFoundError:
             import tomli as tomllib
 
