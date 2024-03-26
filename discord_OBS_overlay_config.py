@@ -8,7 +8,7 @@ valid_channels_list = [
 # OBS settings
 obs_host = '127.0.0.1' # this might be different if you're using a multi-computer setup
 obs_port = 4455
-obs_password = 'password'
+obs_password = 'strongpassword123'
 
 # Web server settings
 
