@@ -26,6 +26,7 @@ from simple_websocket.ws import Server
 sys.path.append('../../../discord-obs-integration/')
 
 from dist_app_updater import is_outdated
+from discord_OBS_overlay_config import web_srv_flask_port
 
 # from io import StringIO
 CON_HEADER_TEXT = """   ____        ____  __   _____
@@ -186,4 +187,4 @@ if __name__ == '__main__':
     t.daemon = True
     t.start()
     print(tc.terminalpaint("#964bb4"), CON_HEADER_TEXT, tc.ENDC)
-    app.run(debug=False)
+    app.run(host="0.0.0.0", port=web_srv_flask_port, debug=False)

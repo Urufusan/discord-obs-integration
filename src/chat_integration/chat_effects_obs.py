@@ -15,6 +15,7 @@
 
 import pytchat
 import requests
+import obsws
 import re
 
 youtube_link_regex = r"((?<=(v|V)/)|(?<=be/)|(?<=(\?|\&)v=)|(?<=embed/))([\w-]+)"
