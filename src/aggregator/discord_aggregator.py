@@ -28,6 +28,13 @@ import requests
 
 from discord_OBS_overlay_config import discord_token, valid_channels_list
 
+if not discord_token:
+    _fatal_err_message_token = "The Discord bot token was not provided in the config, please update your config!"
+    print("!"*len(_fatal_err_message_token))
+    print(_fatal_err_message_token)
+    print("!"*len(_fatal_err_message_token))
+    exit(1)
+
 EMOJI_PATTERN = re.compile('<:[^:]+?:(\\d+)>')
 
 weblink_rgx = r'('

@@ -23,7 +23,7 @@ import random
 
 sys.path.append('../../../discord-obs-integration/')
 
-from discord_OBS_overlay_config import obs_host, obs_port, obs_password
+from discord_OBS_overlay_config import obs_host, obs_port, obs_password, obs_channel_handle
 
 # MINMAX_FOR_CC = {
 #     'brightness': (,),
@@ -40,7 +40,7 @@ ytlive_regex_f = re.compile(youtube_link_regex)
 # print(raw_page_data[:10])
 # print(ytlive_regex_f.findall(raw_page_data))
 def get_stream_id():
-    raw_page_data = requests.get("https://www.youtube.com/@okayxairen2/live").text
+    raw_page_data = requests.get(f"https://www.youtube.com/{obs_channel_handle}/live").text
     for _r_match in ytlive_regex_f.findall(raw_page_data):
         if _r_match[2] == "?":
             return _r_match[3]
@@ -48,7 +48,12 @@ def get_stream_id():
 #TODO: Implement OBS side of thigs
 
 if __name__ == "__main__":
-    cl = obsws.ReqClient(host=obs_host, port=obs_port, password=obs_password, timeout=3)
+    try:
+        cl = obsws.ReqClient(host=obs_host, port=obs_port, password=obs_password, timeout=3)
+    except ConnectionRefusedError as e:
+        print("Failed to connect to OBS! Please check if OBS is running or if your WebSocket credentials are set correctly!")
+        print(e, "IP", obs_host, "PORT", obs_port)
+        exit(1)
     print("Connected to OBS instance running version", cl.get_version().obs_version)
     stuff = cl.get_source_active("facecam")
     print(f"Facecam is currently {'visible' if stuff.video_showing else 'inactive'}")
