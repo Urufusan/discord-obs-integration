@@ -22,6 +22,6 @@ web_srv_flask_port = 24321
 
 runner_modules = [
     {"dir": "src/server/", "file": "web_server_main.py", "label": "flask"},
-    {"dir": "src/aggregator/", "file": "discord_aggregator.py", "label": "discordagr"},
+    {"dir": "src/aggregator/", "file": "discord_aggregator.py", "label": "discord"},
     {"dir": "src/chat_integration/", "file": "chat_effects_obs.py", "label": "ytchat"}
 ]
