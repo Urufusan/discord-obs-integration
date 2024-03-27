@@ -1,11 +1,32 @@
-import threading
-import time
-from flask import Flask, request, jsonify, redirect
-from flask_sock import Sock as FlaskWSocket
-from simple_websocket.ws import Server
+# Copyright (C) 2024 Urufusan
+# 
+# This program is free software: you can redistribute it and/or modify
+# it under the terms of the GNU Affero General Public License as
+# published by the Free Software Foundation, either version 3 of the
+# License, or (at your option) any later version.
+# 
+# This program is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Affero General Public License for more details.
+# 
+# You should have received a copy of the GNU Affero General Public License
+# along with this program.  If not, see <http://www.gnu.org/licenses/>.
+
 import json
 import pprint
+import sys
+import threading
+import time
+
+from flask import Flask, jsonify, redirect, request
+from flask_sock import Sock as FlaskWSocket
+from simple_websocket.ws import Server
+
+sys.path.append('../../../discord-obs-integration/')
+
 from dist_app_updater import is_outdated
+from discord_OBS_overlay_config import web_srv_flask_port
 
 # from io import StringIO
 CON_HEADER_TEXT = """   ____        ____  __   _____
@@ -145,7 +166,7 @@ def wsock_frontend_com(ws: Server):
         if data:
             # if data is None: data = ""
             print()
-            print(f"[WS DATA {type(data)}]", data)
+            print(f"{tc.terminalpaint('#3357bb')}[WS DATA {type(data)}]{tc.ENDC}", data)
             print()
             if data.strip() == 'stop':
                 ws.close(message="1000 client request - stop")
@@ -166,4 +187,4 @@ if __name__ == '__main__':
     t.daemon = True
     t.start()
     print(tc.terminalpaint("#964bb4"), CON_HEADER_TEXT, tc.ENDC)
-    app.run(debug=False)
+    app.run(host="0.0.0.0", port=web_srv_flask_port, debug=False)

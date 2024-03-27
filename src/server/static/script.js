@@ -20,7 +20,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
   // ^ replace the above with WS:
   // Create a WebSocket connection
-  const socket = new WebSocket("ws://127.0.0.1:5000/frontendws"); //cSpell: disable-line
+  const socket = new WebSocket("ws://"+window.location.host+"/frontendws"); //cSpell: disable-line
 
   // Handle WebSocket connection open event
   socket.onopen = function () {
