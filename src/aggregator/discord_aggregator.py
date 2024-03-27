@@ -26,7 +26,7 @@ from functools import cache
 
 import requests
 
-from discord_OBS_overlay_config import discord_token, valid_channels_list
+from discord_OBS_overlay_config import discord_token, valid_channels_list, web_srv_flask_port
 
 if not discord_token:
     _fatal_err_message_token = "The Discord bot token was not provided in the config, please update your config!"
@@ -181,7 +181,7 @@ async def on_message(ctx: discord.Message):
     
     if _final_json_list:
         print(_final_json_list)
-        requests.post("http://127.0.0.1:5000/newimage", json=_final_json_list)
+        requests.post(f"http://127.0.0.1:{web_srv_flask_port}/newimage", json=_final_json_list)
     # await ctx.reply('pong')
 
 @client.hybrid_command(help="Restarts the bot", aliases=["btr", "butter"])
