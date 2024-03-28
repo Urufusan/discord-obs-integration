@@ -2,6 +2,7 @@ import sys
 import subprocess
 import multiprocessing
 from discord_OBS_overlay_config import runner_modules
+from dist_app_updater import is_outdated
 import pprint
 
 class TerminalColors:
@@ -50,12 +51,22 @@ def run_command(command):
 
 if __name__ == "__main__":    
     # Create processes for each command
-    print("Starting D-ObS components...")
-
     processes = []
     filtered_args = []
     if len(sys.argv) > 1:
         filtered_args = sys.argv[1:]
+    
+    if "skipupdate" not in filtered_args:
+        try:
+            if is_outdated():
+                tc.print_ctext("D-ObS is outdated! Run the updater!", color="#ff4444")
+            else:
+                print("D-ObS is up to date.")
+        except:
+            tc.print_ctext("Failed to get updates!", color="#ffff00")
+
+    print("Starting D-ObS components...")
+
     # print(filtered_args)
     # exit() 
     for cmd in runner_modules:

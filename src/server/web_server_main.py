@@ -19,13 +19,13 @@ import sys
 import threading
 import time
 
-from flask import Flask, jsonify, redirect, request
+from flask import Flask, jsonify, redirect, request, url_for
 from flask_sock import Sock as FlaskWSocket
 from simple_websocket.ws import Server
 
 sys.path.append('../../../discord-obs-integration/')
 
-from dist_app_updater import is_outdated
+# from dist_app_updater import is_outdated
 from discord_OBS_overlay_config import web_srv_flask_port
 
 # from io import StringIO
@@ -172,15 +172,22 @@ def wsock_frontend_com(ws: Server):
                 ws.close(message="1000 client request - stop")
                 ws_client_list.remove(ws)
                 break
-            elif data.strip().startswith("@WSCONNECT"):
-                if is_outdated():
-                    ws.send(json.dumps({"spec_message": f"Discord overlay is not up-to-date!<br>Please run the update script!"}))
+            # elif data.strip().startswith("@WSCONNECT"):
+            #     if is_outdated():
+            #         ws.send(json.dumps({"spec_message": f"Discord overlay is not up-to-date!<br>Please run the update script!"}))
                     
     tc.print_ctext("[WS] Disconnected!", color="#ff4444")
     
 @app.route('/')
 def goto_correct():
-    return redirect('/static/index.html')
+    print(request.args.to_dict())
+    if "OBS/" in request.headers.get("User-Agent", ""):
+        tc.print_ctext("OBS Client detected!", color="#3dfa4d")
+    _wurl_params = {key: value for key, value in request.args.items()}
+    return redirect(url_for('static', filename='index.html', **_wurl_params))
+    # #TODO: add menu for overlay or control panel, wait for alexi to finish panel fork
+    # else:
+    #     return redirect()
 
 if __name__ == '__main__':
     t = threading.Thread(target=image_url_sender)
