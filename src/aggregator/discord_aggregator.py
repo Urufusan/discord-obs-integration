@@ -27,7 +27,7 @@ from functools import cache
 
 import requests
 
-from discord_OBS_overlay_config import discord_token, valid_channels_list, web_srv_flask_port, discord_obs_source_controls_enabled
+from discord_OBS_overlay_config import discord_token, valid_channels_list, web_srv_flask_port, discord_obs_source_controls_enabled, discord_obs_control_channels
 
 if discord_obs_source_controls_enabled:
     from discord_OBS_overlay_config import obs_host, obs_port, obs_password
@@ -210,7 +210,7 @@ async def restart(ctx: commands.Context[commands.Bot]):
 
 @client.command(help="Do funny things with the camera", aliases=["cam", "cm"])
 async def camera_control(ctx: commands.Context[commands.Bot], cmd_name: str, *cmd_args: list[str]):
-    if obs_cl:
+    if obs_cl and (ctx.message.channel.id in discord_obs_control_channels):
         try:
             match cmd_name:
                 case "skew":

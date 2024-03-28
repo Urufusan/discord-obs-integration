@@ -6,6 +6,9 @@ valid_channels_list = [
 ]
 
 discord_obs_source_controls_enabled = True
+discord_obs_control_channels = [
+    #TODO: add stuff here
+]
 
 # OBS settings
 obs_host = '127.0.0.1' # this might be different if you're using a multi-computer setup
