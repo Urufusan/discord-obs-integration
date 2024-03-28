@@ -15,6 +15,7 @@
 
 import re
 import sys
+import time
 
 import discord
 from discord.ext import commands
@@ -26,7 +27,20 @@ from functools import cache
 
 import requests
 
-from discord_OBS_overlay_config import discord_token, valid_channels_list, web_srv_flask_port
+from discord_OBS_overlay_config import discord_token, valid_channels_list, web_srv_flask_port, discord_obs_source_controls_enabled
+
+if discord_obs_source_controls_enabled:
+    from discord_OBS_overlay_config import obs_host, obs_port, obs_password
+    from src.chat_integration import obsws
+    try:
+        obs_cl = obsws.ReqClient(host=obs_host, port=obs_port, password=obs_password, timeout=3)
+    except ConnectionRefusedError as e:
+        print("Failed to connect to OBS! Please check if OBS is running or if your WebSocket credentials are set correctly!")
+        print(e, "IP", obs_host, "PORT", obs_port)
+        obs_cl = None
+else:
+    obs_cl = None
+
 
 if not discord_token:
     _fatal_err_message_token = "The Discord bot token was not provided in the config, please update your config!"
@@ -193,6 +207,42 @@ async def restart(ctx: commands.Context[commands.Bot]):
     )
     executable = sys.executable
     os.execl(executable, executable, *sys.argv)
-    
+
+@client.command(help="Do funny things with the camera", aliases=["cam", "cm"])
+async def camera_control(ctx: commands.Context[commands.Bot], cmd_name: str, *cmd_args: list[str]):
+    if obs_cl:
+        try:
+            match cmd_name:
+                case "skew":
+                    if time.time() - last_used_skew > 15:
+                        obs_cl.set_source_filter_settings("facecam", "3D Effect", {
+                                                'rot_x': float(cmd_args[0]),
+                                                'rot_y': float(cmd_args[1]),
+                                                'rot_z': float(cmd_args[2])},
+                                                overlay=True)
+                        last_used_skew = time.time()
+                    else:
+                        await ctx.reply(f"3D skew is on cooldown! Try again in {time.time() - last_used_skew}!", mention_author=True)
+
+                case _chat_command_str if _chat_command_str in ['brightness', 'contrast', 'gamma', 'hue', 'saturation']:
+                    if time.time() - last_used_cc > 5:
+                        print({("hue_shift" if _chat_command_str == "hue" else _chat_command_str): cmd_args[0]})
+                        obs_cl.set_source_filter_settings("facecam", "Color Correction", {
+                        ("hue_shift" if _chat_command_str == "hue" else _chat_command_str): float(cmd_args[0])}, overlay=True)
+                        last_used_cc = time.time()
+                    else:
+                        await ctx.reply(f"Color correction commands are on cooldown! Try again in {time.time() - last_used_cc}!", mention_author=True)
+                # case "exit":
+                #     break
+
+                case _:
+                    print("fail!", cmd_name)
+                    await ctx.reply(f"Unknown command ``{cmd_name.replace('@','')}``!", ephemeral=True, mention_author=True)
+        except Exception as e:
+            print(e)
+    else:
+        await ctx.reply(f"This command is currently disabled.\n```\nDEBUG\ndiscord_obs_source_controls_enabled => {discord_obs_source_controls_enabled}\nobs_cl => {obs_cl}\n```", ephemeral=True, mention_author=True)
+        await ctx.message.delete(5)
+
 if __name__ == "__main__":
     client.run(discord_token)
