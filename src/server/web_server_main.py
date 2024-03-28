@@ -100,7 +100,7 @@ def new_image():
         # Append the image link to the queue
         for _src_url_i in imagelinks:
             image_queue.append(_src_url_i)
-        return jsonify({'message': 'Image link added to the queue'}), 200
+        return jsonify({'message': 'Image link added to the queue'}), 201
     else:
         return jsonify({'error': 'No image link provided'}), 400
 
@@ -113,7 +113,7 @@ def specialmesssage():
             try:
                 tc.print_ctext(f"[WS SPEC MSG] {_specialmsg}", color="#ffdc3e")
                 client.send(json.dumps(_specialmsg))
-                return "OK", 200
+                return "OK", 202
             except Exception as e:
                 tc.print_ctext(f"[WS EXCEPT] {e}", color="#ff4444")
                 ws_client_list.remove(client)
