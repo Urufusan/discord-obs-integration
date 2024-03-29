@@ -48,6 +48,8 @@ if discord_obs_source_controls_enabled:
 else:
     obs_cl = None
 
+last_used_skew = 0
+last_used_cc = 0
 
 if not discord_token:
     _fatal_err_message_token = "The Discord bot token was not provided in the config, please update your config!"
@@ -219,6 +221,8 @@ async def restart(ctx: commands.Context[commands.Bot]):
 
 @client.command(help="Do funny things with the camera", aliases=["cam", "cm"])
 async def camera_control(ctx: commands.Context[commands.Bot], cmd_name: str, *cmd_args: list[str]):
+    global last_used_skew
+    global last_used_cc
     print("cam cmd!", obs_cl, (ctx.message.channel.id in discord_obs_control_channels))
     if obs_cl and (ctx.message.channel.id in discord_obs_control_channels):
         try:
