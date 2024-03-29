@@ -116,7 +116,7 @@ def get_web_url_from_str(raw_string: str) -> str:
 intents = discord.Intents.default()
 intents.message_content = True
 
-client = commands.Bot(command_prefix='>>', intents=intents)
+client = commands.Bot(command_prefix='!', intents=intents)
 
 def is_dev():
     def check(ctx: commands.Context[commands.Bot]):
@@ -215,7 +215,7 @@ async def restart(ctx: commands.Context[commands.Bot]):
     executable = sys.executable
     os.execl(executable, executable, *sys.argv)
 
-@client.hybrid_command(help="Do funny things with the camera", aliases=["cam", "cm"])
+@client.command(help="Do funny things with the camera", aliases=["cam", "cm"])
 async def camera_control(ctx: commands.Context[commands.Bot], cmd_name: str, *cmd_args: list[str]):
     print("cam cmd!", obs_cl, (ctx.message.channel.id in discord_obs_control_channels))
     if obs_cl and (ctx.message.channel.id in discord_obs_control_channels):
