@@ -27,7 +27,13 @@ from functools import cache
 
 import requests
 
-from discord_OBS_overlay_config import discord_token, valid_channels_list, web_srv_flask_port, discord_obs_source_controls_enabled, discord_obs_control_channels
+from discord_OBS_overlay_config import discord_token, valid_channels_list, web_srv_flask_port
+
+try:
+    from discord_OBS_overlay_config import discord_obs_source_controls_enabled, discord_obs_control_channels
+except ImportError:
+    discord_obs_source_controls_enabled = False
+    discord_obs_control_channels = []
 
 if discord_obs_source_controls_enabled:
     from discord_OBS_overlay_config import obs_host, obs_port, obs_password
