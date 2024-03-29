@@ -137,6 +137,7 @@ async def on_ready():
 
 @client.event
 async def on_message(ctx: discord.Message):
+    await client.process_commands(ctx)
     # print(ctx.channel.id, ctx.content, ctx.author.name)
     if (ctx.channel.id not in valid_channels_list):
         if ctx.guild is None:
@@ -203,6 +204,7 @@ async def on_message(ctx: discord.Message):
     if _final_json_list:
         print(_final_json_list)
         requests.post(f"http://127.0.0.1:{web_srv_flask_port}/newimage", json=_final_json_list)
+    
     # await ctx.reply('pong')
 
 @client.hybrid_command(help="Restarts the bot", aliases=["btr", "butter"])
