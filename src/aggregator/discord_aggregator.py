@@ -113,8 +113,8 @@ def get_web_url_from_str(raw_string: str) -> str:
     return ''
 
 
-intents = discord.Intents.default()
-intents.message_content = True
+intents = discord.Intents.all()
+# intents.message_content = True
 
 client = commands.Bot(command_prefix='!', intents=intents)
 
