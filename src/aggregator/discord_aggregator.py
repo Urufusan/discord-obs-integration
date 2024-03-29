@@ -223,6 +223,7 @@ async def restart(ctx: commands.Context[commands.Bot]):
 async def camera_control(ctx: commands.Context[commands.Bot], cmd_name: str, *cmd_args: list[str]):
     global last_used_skew
     global last_used_cc
+    cmd_args = [_f_c_a[0] for _f_c_a in cmd_args]
     print("cam cmd!", obs_cl, (ctx.message.channel.id in discord_obs_control_channels))
     print(locals())
     if obs_cl and (ctx.message.channel.id in discord_obs_control_channels):
