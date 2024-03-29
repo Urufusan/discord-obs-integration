@@ -227,7 +227,7 @@ async def camera_control(ctx: commands.Context[commands.Bot], cmd_name: str, *cm
     # this is utter madness
     ze_command = ctx.message.content.lstrip("!cam ").lstrip("!cm ").split(" ")
     ze_command.pop(ze_command.index(cmd_name))
-    cmd_args = ze_command
+    cmd_args = [_f_c_a[:6] for _f_c_a in ze_command]
     # FIX THIS
     # cmd_args = [_f_c_a[0] for _f_c_a in cmd_args]
     print("cam cmd!", obs_cl, (ctx.message.channel.id in discord_obs_control_channels))
