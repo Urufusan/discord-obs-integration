@@ -22,7 +22,7 @@ import shutil
 
 PROJECT_PARENT_FOLDER = os.path.dirname(os.path.abspath(__file__))
 # from requests_toolbelt.utils import dump
-
+# TODO: Branch selection
 def get_online_package_hash():
     _codeload_request = requests.head("https://codeload.github.com/Urufusan/discord-obs-integration/zip/refs/heads/main", headers={"User-Agent": "curl/7.81.0"})
     _etag = _codeload_request.headers.get("etag", "").strip().lstrip("W/").strip("\"")
