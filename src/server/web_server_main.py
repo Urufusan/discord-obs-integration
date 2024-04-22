@@ -29,9 +29,9 @@ sys.path.append('../../../discord-obs-integration/')
 from discord_OBS_overlay_config import web_srv_flask_port
 
 # from io import StringIO
-CON_HEADER_TEXT = """   ____        ____  __   _____
+CON_HEADER_TEXT = r"""   ____        ____  __   _____
    / __ \      / __ \/ /_ / ___/
-  / / / /_____/ / / / __ \\\__ \ 
+  / / / /_____/ / / / __ \\__ \ 
  / /_/ /_____/ /_/ / /_/ /__/ / 
 /_____/      \____/_.___/____/  
 """
