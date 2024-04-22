@@ -19,6 +19,7 @@ import os
 import sys
 from io import BytesIO
 import shutil
+import platform
 
 PROJECT_PARENT_FOLDER = os.path.dirname(os.path.abspath(__file__))
 # from requests_toolbelt.utils import dump
@@ -52,7 +53,7 @@ def move_files_from_directory():
     
     # Get a list of files in the source directory
     os.system(f"cp -aR {source_dir}/* .")
-    os.system("pip3 install flask flask-sock requests httpx httpx[http2] websocket-client")
+    os.system(f"{'pip3' if platform.system() != 'Windows' else 'py -m pip'} install flask flask-sock requests httpx httpx[http2] websocket-client")
     # Remove the source directory
     try:
         shutil.rmtree(source_dir)

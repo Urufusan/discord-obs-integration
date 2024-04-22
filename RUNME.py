@@ -1,3 +1,4 @@
+import platform
 import sys
 import subprocess
 import multiprocessing
@@ -74,7 +75,7 @@ if __name__ == "__main__":
             if cmd['label'] not in filtered_args:
                 tc.print_ctext(f"Skipped loading [{cmd['label']}]", "#eba525")
                 continue
-        command = f'sh -c "cd {cmd["dir"]} && python3 {cmd["file"]}"'
+        command = f'sh -c "cd {cmd["dir"]} && {"python3" if platform.system() != "Windows" else "py"} {cmd["file"]}"'
         process = multiprocessing.Process(target=run_command, args=(command,))
         processes.append(process)
         tc.print_ctext(f"Loaded [{cmd['label']}]", "#37f026")
