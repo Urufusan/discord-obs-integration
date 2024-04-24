@@ -1,10 +1,12 @@
+import os
 import platform
 import sys
 import subprocess
 import multiprocessing
 from discord_OBS_overlay_config import runner_modules
-from dist_app_updater import is_outdated
+from dist_app_updater import is_outdated, PROJECT_PARENT_FOLDER
 import pprint
+from src.utils.windows_aditional_stuff_mgr import windows_install_procedure
 
 class TerminalColors:
     HEADER = '\033[95m'
@@ -50,7 +52,14 @@ tc = TerminalColors()
 def run_command(command):
     subprocess.call(command, shell=True)
 
-if __name__ == "__main__":    
+if __name__ == "__main__":   
+    
+    # Bogus windows shenanigans
+    if platform.system() == "Windows":
+        if not os.environ.get("CMDER_SHELL"):
+            print("You are not running D-ObS under a supported shell on Windows! D-ObS will now install Cmder!")
+            windows_install_procedure(PROJECT_PARENT_FOLDER, __file__)
+     
     # Create processes for each command
     processes = []
     filtered_args = []
