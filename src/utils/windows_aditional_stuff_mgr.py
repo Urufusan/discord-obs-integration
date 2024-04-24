@@ -38,7 +38,7 @@ def run_self_under_cmder(_target_pwd: str, _target_file: str):
     """
     Execute RUNME.py under Cmder
     """
-    os.system(_CMD_CONSTANT + f'%temp%\\cmder\\vendor\\git-for-windows\\bin\\sh.exe -c "cd {convert_win_path_to_unix_path(_target_pwd)} && py {convert_win_path_to_unix_path(_target_file)}"')
+    os.system(_CMD_CONSTANT + f'%temp%\\cmder\\vendor\\git-for-windows\\bin\\sh.exe -c "cd \'{convert_win_path_to_unix_path(_target_pwd)}\' && py \'{convert_win_path_to_unix_path(_target_file)}\'"')
 
 def check_if_shell_exists():
     _shell_location = f"{os.getenv('TEMP')}\\cmder\\vendor\\git-for-windows\\bin\\sh.exe"
