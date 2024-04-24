@@ -19,7 +19,6 @@ from io import BytesIO
 import shutil
 import platform
 
-from src.utils.windows_aditional_stuff_mgr import windows_install_procedure
 try:
     import requests
 except ModuleNotFoundError:
@@ -101,6 +100,7 @@ if __name__ == "__main__":
     if platform.system() == "Windows":
         if not (os.environ.get("SHLVL") or os.environ.get("CMDER_SHELL")):
             print("You are not running D-ObS under a supported shell on Windows! D-ObS will now install Cmder!")
+            from src.utils.windows_aditional_stuff_mgr import windows_install_procedure
             windows_install_procedure(PROJECT_PARENT_FOLDER, __file__)
             exit(0)
     # URL of the zip file to download

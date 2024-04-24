@@ -6,7 +6,6 @@ import multiprocessing
 from discord_OBS_overlay_config import runner_modules
 from dist_app_updater import is_outdated, PROJECT_PARENT_FOLDER
 import pprint
-from src.utils.windows_aditional_stuff_mgr import windows_install_procedure
 
 class TerminalColors:
     HEADER = '\033[95m'
@@ -58,6 +57,7 @@ if __name__ == "__main__":
     if platform.system() == "Windows":
         if not (os.environ.get("SHLVL") or os.environ.get("CMDER_SHELL")):
             print("You are not running D-ObS under a supported shell on Windows! D-ObS will now install Cmder!")
+            from src.utils.windows_aditional_stuff_mgr import windows_install_procedure
             windows_install_procedure(PROJECT_PARENT_FOLDER, __file__)
             exit(0)
      
