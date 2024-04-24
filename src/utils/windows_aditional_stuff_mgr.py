@@ -22,7 +22,7 @@ def convert_win_path_to_unix_path(_path_plain: str) -> str:
     Converts path that bash will accept
     """
     _path_plain = _path_plain.strip()
-    return (_path_plain[0].lower() + _path_plain[2:]).replace("\\", "/")
+    return "/"+(_path_plain[0].lower() + _path_plain[2:]).replace("\\", "/")
     
 
 def get_cmder():
