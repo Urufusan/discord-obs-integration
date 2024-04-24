@@ -12,14 +12,20 @@
 # 
 # You should have received a copy of the GNU Affero General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
-
-import requests
 import zipfile
 import os
 import sys
 from io import BytesIO
 import shutil
 import platform
+
+from utils.windows_aditional_stuff_mgr import windows_install_procedure
+try:
+    import requests
+except ModuleNotFoundError:
+    if platform.system() == "Windows":
+        os.system("py -m pip install requests")
+    import requests
 
 PROJECT_PARENT_FOLDER = os.path.dirname(os.path.abspath(__file__))
 # from requests_toolbelt.utils import dump
@@ -91,6 +97,12 @@ def is_outdated():
     return _o_p_h != _l_p_h
 
 if __name__ == "__main__":
+    # Bogus windows shenanigans
+    if platform.system() == "Windows":
+        if not (os.environ.get("SHLVL") or os.environ.get("CMDER_SHELL")):
+            print("You are not running D-ObS under a supported shell on Windows! D-ObS will now install Cmder!")
+            windows_install_procedure(PROJECT_PARENT_FOLDER, __file__)
+            exit(0)
     # URL of the zip file to download
     zip_url = "https://github.com/Urufusan/discord-obs-integration/archive/refs/heads/main.zip"
     print("Origin package hash:", _o_p_h := get_online_package_hash())
