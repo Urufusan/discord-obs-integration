@@ -59,6 +59,7 @@ if __name__ == "__main__":
         if not os.environ.get("SHLVL"):
             print("You are not running D-ObS under a supported shell on Windows! D-ObS will now install Cmder!")
             windows_install_procedure(PROJECT_PARENT_FOLDER, __file__)
+            exit(0)
      
     # Create processes for each command
     processes = []
