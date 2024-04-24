@@ -56,7 +56,7 @@ if __name__ == "__main__":
     
     # Bogus windows shenanigans
     if platform.system() == "Windows":
-        if not os.environ.get("CMDER_SHELL"):
+        if not os.environ.get("SHLVL"):
             print("You are not running D-ObS under a supported shell on Windows! D-ObS will now install Cmder!")
             windows_install_procedure(PROJECT_PARENT_FOLDER, __file__)
      
