@@ -17,6 +17,14 @@ import os
 
 _CMD_CONSTANT = "cmd.exe /c "
 
+def convert_win_path_to_unix_path(_path_plain: str) -> str:
+    """
+    Converts path that bash will accept
+    """
+    _path_plain = _path_plain.strip()
+    return (_path_plain[0].lower() + _path_plain[2:]).replace("\\", "/")
+    
+
 def get_cmder():
     """
     Downloads and sets up the Cmder shell and runtime
@@ -30,7 +38,7 @@ def run_self_under_cmder(_target_pwd: str, _target_file: str):
     """
     Execute RUNME.py under Cmder
     """
-    os.system(_CMD_CONSTANT + f'%temp%\\cmder\\vendor\\git-for-windows\\bin\\sh.exe -c "cd {_target_pwd} && py {_target_file}"')
+    os.system(_CMD_CONSTANT + f'%temp%\\cmder\\vendor\\git-for-windows\\bin\\sh.exe -c "cd {convert_win_path_to_unix_path(_target_pwd)} && py {convert_win_path_to_unix_path(_target_file)}"')
 
 def check_if_shell_exists():
     _shell_location = f"{os.getenv('TEMP')}\\cmder\\vendor\\git-for-windows\\bin\\sh.exe"
