@@ -20,7 +20,7 @@ import time
 import discord
 from discord.ext import commands
 
-sys.path.append('../../../discord-obs-integration/')
+sys.path.append('../../')
 import json
 import os
 from functools import cache

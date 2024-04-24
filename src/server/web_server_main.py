@@ -23,7 +23,7 @@ from flask import Flask, jsonify, redirect, request, url_for
 from flask_sock import Sock as FlaskWSocket
 from simple_websocket.ws import Server
 
-sys.path.append('../../../discord-obs-integration/')
+sys.path.append('../../')
 
 # from dist_app_updater import is_outdated
 from discord_OBS_overlay_config import web_srv_flask_port
