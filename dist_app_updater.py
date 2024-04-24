@@ -19,7 +19,7 @@ from io import BytesIO
 import shutil
 import platform
 
-from utils.windows_aditional_stuff_mgr import windows_install_procedure
+from src.utils.windows_aditional_stuff_mgr import windows_install_procedure
 try:
     import requests
 except ModuleNotFoundError:
