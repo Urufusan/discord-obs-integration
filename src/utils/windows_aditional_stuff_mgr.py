@@ -32,7 +32,7 @@ def get_cmder():
     os.system(_CMD_CONSTANT + "mkdir %temp%\\cmder")
     # print(os.chdir(os.getenv('TEMP')))
     os.system(_CMD_CONSTANT + "curl -L -o %temp%/cmder.zip https://github.com/cmderdev/cmder/releases/download/v1.3.24/cmder.zip")
-    os.system(_CMD_CONSTANT + "tar -xvf cmder.zip -C %temp%/cmder")
+    os.system(_CMD_CONSTANT + "tar -xvf %temp%/cmder.zip -C %temp%/cmder")
 
 def run_self_under_cmder(_target_pwd: str, _target_file: str):
     """
