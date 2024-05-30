@@ -247,7 +247,7 @@ async def camera_control(ctx: commands.Context[commands.Bot], cmd_name: str, *cm
                                                 overlay=True)
                         last_used_skew = time.time()
                     else:
-                        await ctx.reply(f"3D skew is on cooldown! Try again in {time.time() - last_used_skew:.2f}!", mention_author=True)
+                        await ctx.reply(f"3D skew is on cooldown! Try again in {time.time() - last_used_skew:.2f} seconds!", mention_author=True)
 
                 case _chat_command_str if _chat_command_str in ['brightness', 'contrast', 'gamma', 'hue', 'saturation']:
                     if time.time() - last_used_cc > 5:
@@ -256,7 +256,7 @@ async def camera_control(ctx: commands.Context[commands.Bot], cmd_name: str, *cm
                         ("hue_shift" if _chat_command_str == "hue" else _chat_command_str): float(cmd_args[0])}, overlay=True)
                         last_used_cc = time.time()
                     else:
-                        await ctx.reply(f"Color correction commands are on cooldown! Try again in {time.time() - last_used_cc:.2f}!", mention_author=True)
+                        await ctx.reply(f"Color correction commands are on cooldown! Try again in {time.time() - last_used_cc:.2f} seconds!", mention_author=True)
                 # case "exit":
                 #     break
 
