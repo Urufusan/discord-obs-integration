@@ -234,7 +234,7 @@ async def camera_control(ctx: commands.Context[commands.Bot], cmd_name: str, *cm
     # FIX THIS
     # cmd_args = [_f_c_a[0] for _f_c_a in cmd_args]
     print("cam cmd!", obs_cl, (ctx.message.channel.id in discord_obs_control_channels))
-    print(locals())
+    # print(locals())
     if obs_cl and (ctx.message.channel.id in discord_obs_control_channels):
         try:
             match cmd_name:
